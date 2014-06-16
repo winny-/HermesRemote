@@ -3,7 +3,7 @@
 function getStatus() {
     $statusMessage = null;
     $retval = null;
-    exec("osascript status.scpt", $statusMessage, $retval);
+    exec("osascript status.applescript", $statusMessage, $retval);
 
     $status = array();
     $status['running'] = $statusMessage[0] == '__RUNNING__';
