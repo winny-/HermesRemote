@@ -9,18 +9,22 @@ $status = getHermesStatus();
 <body>
     <h1>
         <?php
-        if ($status['running'] !== true) {
-            echo "Hermes is not running :( &mdash; retval: {$status[retval]}";
+        if (!$status) {
+            echo "Hermes is not running :(";
         } else {
-            echo "Hermes!!!";
+            echo "Hermes: {$status['state']}";
         }
         ?>
     </h1>
 
     <p>
         <?php
-        if ($status['running'] === true) {
+        if ($status) {
             echo "{$status['title']}<br>{$status['artist']}<br>{$status['album']}";
+            echo '<br><br>';
+            $position = formatHermesTime($status['position']);
+            $duration = formatHermesTime($status['duration']);
+            echo "{$status['rating']} :: {$position}/{$duration}";
             echo '<br>';
             echo "<img src=\"{$status['artwork']}\">";
         }

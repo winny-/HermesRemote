@@ -10,17 +10,38 @@ function getHermesStatus($script=NULL)
     $retval = null;
     exec("osascript status.applescript", $statusMessage, $retval);
 
-    $status = array();
-    $status['running'] = $statusMessage[0] == '__RUNNING__';
-    $status['retval'] = $retval;
-    if ($status['running'] === true && $status['retval'] === 0) {
-        $status['title'] = $statusMessage[1];
-        $status['artist'] = $statusMessage[2];
-        $status['album'] = $statusMessage[3];
-        $status['artwork'] = $statusMessage[4];
+    if ($retval !== 0) {
+        return false;
     }
 
-    return $status;
+    $status = json_decode(implode("\n", $statusMessage), true);
+
+    if ($status['running'] !== true) {
+        return false;
+    }
+    
+    return $status['info'];
+}
+
+function getHermesRating($rating) {
+    switch ($rating) {
+        case 0:
+            return 'no rating';
+        case -1:
+            return 'disliked';
+        case 1:
+            return 'liked';
+        default:
+            throw new Exception('Bad rating: '.$rating);
+    }
+}
+
+function formatHermesTime($seconds) {
+    $hours = floor($seconds / 3600);
+    $mins = floor(($seconds - ($hours*3600)) / 60);
+    $secs = floor($seconds % 60);
+
+    return "${mins}:{$secs}";
 }
 
 ?>
