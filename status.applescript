@@ -7,9 +7,6 @@ on is_running(appName)
 	tell application "System Events" to (name of processes) contains appName
 end is_running
 
-set nl to "
-"
-
 set reply to json's createDict()
 if is_running("Hermes") then
 	reply's setkv("running", true)
