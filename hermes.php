@@ -1,24 +1,8 @@
 <?php
 
-function getStatus() {
-    $statusMessage = null;
-    $retval = null;
-    exec("osascript status.applescript", $statusMessage, $retval);
+require_once(__DIR__ . '/hermes.lib.php');
 
-    $status = array();
-    $status['running'] = $statusMessage[0] == '__RUNNING__';
-    $status['retval'] = $retval;
-    if ($status['running'] === true && $status['retval'] === 0) {
-        $status['title'] = $statusMessage[1];
-        $status['artist'] = $statusMessage[2];
-        $status['album'] = $statusMessage[3];
-        $status['artwork'] = $statusMessage[4];
-    }
-
-    return $status;
-}
-
-$status = getStatus();
+$status = getHermesStatus();
 
 ?>
 <!DOCTYPE html>
