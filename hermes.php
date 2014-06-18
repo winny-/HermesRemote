@@ -22,9 +22,10 @@ $status = getHermesStatus();
         if ($status) {
             echo "{$status['title']}<br>{$status['artist']}<br>{$status['album']}";
             echo '<br><br>';
+            $rating = getHermesRating($status['rating']);
             $position = formatHermesTime($status['position']);
             $duration = formatHermesTime($status['duration']);
-            echo "{$status['rating']} :: {$position}/{$duration}";
+            echo "{$rating} :: {$position}/{$duration}";
             echo '<br>';
             echo "<img src=\"{$status['artwork']}\">";
         }
