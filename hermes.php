@@ -22,6 +22,7 @@ $overview = $status ? "Hermes: {$status['state']}" : 'Hermes is not running :(';
 ?>
 <!DOCTYPE html>
 <head>
+    <meta charset='utf-8'>
     <title><?php echo $overview; ?></title>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.js"></script>
     <script src="hermes.app.js"></script>
@@ -30,8 +31,8 @@ $overview = $status ? "Hermes: {$status['state']}" : 'Hermes is not running :(';
     <h1><?php echo $overview; ?></h1>
 
     <ul>
-        <li><input type='button' id='playpause' value='Play/Pause'></li>
-        <li><input type='button' id='next-song' value='Next song'></li>
+        <li><input type='button' id='playpause' value='▶❚❚'></li>
+        <li><input type='button' id='next-song' value='▶▶'></li>
         <li><input type='button' id='like' value='Like'> :: <input type='button' id='dislike' value='Dislike'></li>
     </ul>
 
