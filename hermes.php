@@ -24,6 +24,7 @@ $overview = $status ? "Hermes: {$status['state']}" : 'Hermes is not running :(';
 <head>
     <meta charset='utf-8'>
     <title><?php echo $overview; ?></title>
+    <link href='hermes.app.css' type='text/css' rel='stylesheet'>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.js"></script>
     <script src="hermes.app.js"></script>
 </head>
@@ -44,8 +45,8 @@ $overview = $status ? "Hermes: {$status['state']}" : 'Hermes is not running :(';
             $rating = getHermesRating($status['rating']);
             $position = formatHermesTime($status['position']);
             $duration = formatHermesTime($status['duration']);
-            echo "<span id='rating'>{$rating}</span> :: <span id='time'>{$position}/{$duration}</span>";
-            echo '<br>';
+            echo "<span id='time'>{$position}/{$duration}</span>";
+            echo '<br><br>';
             echo "<img id='artwork' src=\"{$status['artwork']}\">";
         }
         ?>

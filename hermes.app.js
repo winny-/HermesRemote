@@ -18,13 +18,30 @@ function updateHermesApp() {
 		$('#title').text(data.title);
 		$('#artist').text(data.artist);
 		$('#album').text(data.album);
-		$('#rating').text(stringForRating(data.rating));
+		updateRatingButtons(data.rating);
 		$('#time').text(timestampForSeconds(data.position)+'/'+timestampForSeconds(data.duration));
 		$('#artwork').attr('src', data.artwork);
 		var state = 'Hermes: '+data.state;
 		$('title').text(state);
 		$('h1').text(state);
 	});
+}
+
+function updateRatingButtons(rating) {
+	var dislike = $('#dislike');
+	var like = $('#like');
+	dislike.val('Dislike').removeClass('ed');
+	like.val('Like').removeClass('ed').removeAttr('disabled');
+
+	if (rating == 1) {
+		like.val('Liked').addClass('ed');
+	} else if (rating == -1) {
+		dislike.val('Disliked').addClass('ed');
+	}
+
+	if (rating == 1 || rating == -1) {
+		like.attr('disabled', true);
+	}
 }
 
 function stringForRating(rating) {
