@@ -1,7 +1,10 @@
-tell application "Finder"
-	set json_path to file "json.scpt" of folder of (path to me)
-end tell
-set json to load script (json_path as alias)
+on load_json()
+	global json
+	tell application "Finder"
+		set json_path to file "json.scpt" of folder of (path to me)
+	end tell
+	set json to load script (json_path as alias)
+end load_json
 
 on is_running(appName)
 	tell application "System Events" to (name of processes) contains appName
@@ -43,4 +46,23 @@ on hermes_status()
 	return reply's toJson()
 end hermes_status
 
-return hermes_status()
+on parse_arguments(argv)
+	set arguments to ""
+	repeat with arg in argv
+		set arguments to arguments & " " & arg
+	end repeat
+	return arguments
+end parse_arguments
+
+on run argv
+	set arguments to parse_arguments(argv)
+	if arguments ≠ "" and arguments ≠ " " then
+		if is_running("Hermes") then
+			set script_text to "Tell Application \"Hermes\" to " & arguments
+			run script {script_text}
+		end if
+	else
+		load_json()
+		return hermes_status()
+	end if
+end run
