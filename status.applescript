@@ -37,4 +37,5 @@ if is_running("Hermes") then
 else
 	reply's setkv("running", false)
 end if
+reply's setkv("time", (do shell script "date -u +%s"))
 return reply's toJson()
