@@ -74,6 +74,9 @@ function formatHermesTime($seconds) {
     $mins = floor(($seconds - ($hours*3600)) / 60);
     $secs = floor($seconds % 60);
 
+    $mins = sprintf('%02s', $mins);
+    $secs = sprintf('%02s', $secs);
+
     return "${mins}:{$secs}";
 }
 

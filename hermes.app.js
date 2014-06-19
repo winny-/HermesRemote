@@ -41,8 +41,10 @@ function stringForRating(rating) {
 }
 
 function timestampForSeconds(time) {
+	function twoDigits(n) {
+		return ('0' + n).slice(-2);
+	}
 	var minutes = Math.floor(time / 60);
 	var seconds = time - minutes * 60;
-	return minutes+':'+seconds;
+	return twoDigits(minutes)+':'+twoDigits(seconds);
 }
-
