@@ -11,7 +11,7 @@ set reply to json's createDict()
 if is_running("Hermes") then
 	reply's setkv("running", true)
 	set hermesInfo to json's createDict()
-	set hermesStations to json's createDict()
+--	set hermesStations to json's createDict()
 	tell application "Hermes"
 		hermesInfo's setkv("state", playback state as string)
 		hermesInfo's setkv("volume", playback volume)
@@ -32,7 +32,7 @@ if is_running("Hermes") then
 		hermesInfo's setkv("station_name", current station's name)
 		hermesInfo's setkv("station_id", current station's station ID)
 	end tell
-	hermesInfo's setkv("stations", hermesStations)
+--	hermesInfo's setkv("stations", hermesStations)
 	reply's setkv("info", hermesInfo)
 else
 	reply's setkv("running", false)
