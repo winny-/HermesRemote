@@ -23,7 +23,7 @@ $overview = $status ? "Hermes: {$status['state']}" : 'Hermes is not running :(';
 <!DOCTYPE html>
 <head>
     <title><?php echo $overview; ?></title>
-    <script src="jquery.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.js"></script>
     <script src="hermes.app.js"></script>
 </head>
 <body>
