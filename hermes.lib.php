@@ -1,5 +1,38 @@
 <?php
 
+abstract class HermesCommands
+{
+    const PLAY = 'play';
+    const PAUSE = 'pause';
+    const PLAYPAUSE = 'playpause';
+    const NEXT = 'next song';
+    const LIKE = 'thumbs up';
+    const DISLIKE = 'thumbs down';
+    const TIRED = 'tired of song';
+    const INCREASEVOLUME = 'increase volume';
+    const DECREASEVOLUME = 'decrease volume';
+    const MAXIMIZEVOLUME = 'maximize volume';
+    const MUTE = 'mute';
+    const UNMUTE = 'unmute';
+    const SETPLAYBACKVOLUME = 'set playback volume to REPLACE';
+}
+
+function sendHermesCommand($command, $argument=NULL, $script=NULL)
+{
+    if (is_null($script)) {
+        $script = __DIR__ . '/status.applescript';
+    }
+    if ($command === HermesCommands::SETPLAYBACKVOLUME) {
+        $command = str_replace('REPLACE', $argument, $command);
+    }
+
+    $statusMessage = null;
+    $retval = null;
+    exec("osascript {$script} {$command}", $statusMessage, $retval);
+
+    return $retval === 0;
+}
+
 function getHermesStatus($script=NULL)
 {
     if (is_null($script)) {
@@ -8,7 +41,7 @@ function getHermesStatus($script=NULL)
 
     $statusMessage = null;
     $retval = null;
-    exec("osascript status.applescript", $statusMessage, $retval);
+    exec("osascript {$script}", $statusMessage, $retval);
 
     if ($retval !== 0) {
         return false;
