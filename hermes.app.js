@@ -17,7 +17,7 @@ function sendHermesCommand(e) {
 
 function updateHermesApp() {
 	if ((new Date).getTime())
-	$.getJSON(hermesAPI, {json: 1}).done(function (data) {
+	$.getJSON(hermesAPI).done(function (data) {
 		$('#title').text(data.title);
 		$('#artist').text(data.artist);
 		$('#album').text(data.album);

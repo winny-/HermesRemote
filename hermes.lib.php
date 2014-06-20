@@ -17,6 +17,7 @@ abstract class HermesCommands
     const SETPLAYBACKVOLUME = 'set playback volume to REPLACE';
 }
 
+// XXX: Validate commands to prevent AS injection.
 function sendHermesCommand($command, $argument=NULL, $script=NULL)
 {
     if (is_null($script)) {
