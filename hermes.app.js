@@ -1,4 +1,4 @@
-var hermesAPI = '/api.php';
+var hermesAPI = 'api.php';
 
 $(document).ready(function() {
 	$('#playpause').click(sendHermesCommand);
