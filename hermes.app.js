@@ -15,7 +15,25 @@ $(document).ready(function() {
 	// --------------------
 
 	function sendHermesCommand(e) {
-		var command = e.target.id.replace('-', ' ');
+		var command;
+		if (e.type === 'click') {
+			command = e.target.id.replace('-', ' ');
+		} else if (e.type === 'keypress') {
+			switch (e.which) {
+				// See https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent.keyCode#Constants_for_keyCode_value
+				case 0x20: // Space
+				command = 'playpause';
+
+				e.preventDefault();
+				e.stopPropagation();
+				break;
+				default:
+				return;
+			}
+		} else {
+			throw 'HermesRemote: Bad event type '+e.type+' in sendHermesCommand()';
+		}
+
 		$.post(hermesAPI, {command: command});
 	}
 
@@ -87,6 +105,7 @@ $(document).ready(function() {
 	// --------------------
 
 	$('#playpause, #next-song, #like, #dislike').click(sendHermesCommand);
+	$(document).keypress(sendHermesCommand);
 
 	updateHermesApp();
 	window.setInterval(updateHermesApp, 1000);
