@@ -25,6 +25,7 @@ PHP is great. It's shipped with all Macs. With a few clicks, a PHP-enabled webse
 
 Two options:
 - [Set up the built-in PHP and webserver](http://apple.stackexchange.com/a/23757)
+
 or
 - Install `php55` from Homebrew: `brew install php55`
 - Run this from the project directory: `/usr/local/bin/php -S localhost:1234`
