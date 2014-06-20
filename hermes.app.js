@@ -26,9 +26,14 @@ $(document).ready(function() {
 			album.text(data.album);
 			updateRatingButtons(data.rating);
 			time.text(timestampForSeconds(data.position)+'/'+timestampForSeconds(data.duration));
-			artwork.attr('src', data.artwork);
+			updateArtwork(data.artwork);
 			updateStatusLine(data);
 		});
+	}
+
+	function updateArtwork(artworkURL) {
+		artworkURL = (artworkURL) ? artworkURL : 'missing-album.png';
+		artwork.attr('src', artworkURL);
 	}
 
 	function updateStatusLine(data) {
