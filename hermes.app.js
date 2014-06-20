@@ -20,7 +20,6 @@ $(document).ready(function() {
 	}
 
 	function updateHermesApp() {
-		if ((new Date).getTime())
 		$.getJSON(hermesAPI).done(function (data) {
 			title.text(data.title);
 			artist.text(data.artist);
