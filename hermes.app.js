@@ -9,8 +9,8 @@ $(document).ready(function() {
 		artwork = $('#artwork'),
 		status = $('#statusline'),
 		titleElement = $('title'),
-		dislike = $('#dislike'),
-		like = $('#like');
+		dislike = $('#thumbs-down'),
+		like = $('#thumbs-up');
 
 	// --------------------
 
@@ -19,15 +19,16 @@ $(document).ready(function() {
 		if (e.type === 'click') {
 			command = e.target.id.replace('-', ' ');
 		} else if (e.type === 'keypress') {
-			switch (e.which) {
-				// See https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent.keyCode#Constants_for_keyCode_value
-				case 0x20: // Space
+			var key = e.which;
+			if (key === 32) { // space
 				command = 'playpause';
-
-				e.preventDefault();
-				e.stopPropagation();
-				break;
-				default:
+			} else if (key === 100) { // d
+				command = 'thumbs down';
+			} else if (key === 108) { // l
+				command = 'thumbs up';
+			} else if (key === 110) { // n
+				command = 'next song';
+			} else {
 				return;
 			}
 		} else {
@@ -104,7 +105,7 @@ $(document).ready(function() {
 
 	// --------------------
 
-	$('#playpause, #next-song, #like, #dislike').click(sendHermesCommand);
+	$('#playpause, #next-song, #thumbs-up, #thumbs-down').click(sendHermesCommand).focus(function() { this.blur(); });
 	$(document).keypress(sendHermesCommand);
 
 	updateHermesApp();
