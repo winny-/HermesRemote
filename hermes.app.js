@@ -24,11 +24,19 @@ function updateHermesApp() {
 		updateRatingButtons(data.rating);
 		$('#time').text(timestampForSeconds(data.position)+'/'+timestampForSeconds(data.duration));
 		$('#artwork').attr('src', data.artwork);
-		var state = 'Hermes: '+data.state;
-		$('title').text(state);
-		$('h1').text(state);
-		$('#station').text(data.station_name);
+		updateStatusLine(data);
 	});
+}
+
+function updateStatusLine(data) {
+	var stateSymbol = (data.state === 'playing') ? '▶' :
+					  (data.state === 'paused') ? '❚❚' :
+					  (data.state === 'stopped') ? '◼' :
+					  data.state;
+	var station = (data.station_name) ? ' '+data.station_name : '';
+	var statusLine = 'Hermes '+stateSymbol+station;
+	$('#statusline').text(statusLine);
+	$('title').text(statusLine);
 }
 
 function updateRatingButtons(rating) {
