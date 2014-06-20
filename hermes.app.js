@@ -1,20 +1,23 @@
+var hermesAPI = '/api.php';
+
 $(document).ready(function() {
 	$('#playpause').click(sendHermesCommand);
 	$('#next-song').click(sendHermesCommand);
 	$('#like').click(sendHermesCommand);
 	$('#dislike').click(sendHermesCommand);
 
+	updateHermesApp();
 	window.setInterval(updateHermesApp, 1000);
 });
 
 function sendHermesCommand(e) {
 	var command = e.target.id.replace('-', ' ');
-	$.post(document.URL, {command: command});
+	$.post(hermesAPI, {command: command});
 }
 
 function updateHermesApp() {
 	if ((new Date).getTime())
-	$.getJSON(document.URL, {json: 1}).done(function (data) {
+	$.getJSON(hermesAPI, {json: 1}).done(function (data) {
 		$('#title').text(data.title);
 		$('#artist').text(data.artist);
 		$('#album').text(data.album);
@@ -24,6 +27,7 @@ function updateHermesApp() {
 		var state = 'Hermes: '+data.state;
 		$('title').text(state);
 		$('h1').text(state);
+		$('#station').text(data.station_name);
 	});
 }
 

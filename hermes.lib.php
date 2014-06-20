@@ -44,12 +44,14 @@ function getHermesStatus($script=NULL)
     exec("osascript {$script}", $statusMessage, $retval);
 
     if ($retval !== 0) {
+        trigger_error("Return value: {$retval}");
         return false;
     }
 
     $status = json_decode(implode("\n", $statusMessage), true);
 
     if ($status['running'] !== true) {
+        trigger_error("Not running: {$status['running']}");
         return false;
     }
     
