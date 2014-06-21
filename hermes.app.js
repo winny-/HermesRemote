@@ -11,7 +11,8 @@ $(document).ready(function() {
 		titleElement = $('title'),
 		dislike = $('#thumbs-down'),
 		like = $('#thumbs-up'),
-		tiredOfSong = $('#tired-of-song');
+		tiredOfSong = $('#tired-of-song'),
+		linkIcon = $('link[rel=icon]');
 
 	// --------------------
 
@@ -56,6 +57,7 @@ $(document).ready(function() {
 	function updateArtwork(artworkURL) {
 		artworkURL = (artworkURL) ? artworkURL : 'missing-album.png';
 		artwork.attr('src', artworkURL);
+		linkIcon.attr('href', artworkURL);
 	}
 
 	function updateStatusLine(data) {
