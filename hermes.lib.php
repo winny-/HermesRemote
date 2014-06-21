@@ -1,21 +1,20 @@
 <?php
 
-abstract class HermesCommands
-{
-    const PLAY = 'play';
-    const PAUSE = 'pause';
-    const PLAYPAUSE = 'playpause';
-    const NEXT = 'next song';
-    const LIKE = 'thumbs up';
-    const DISLIKE = 'thumbs down';
-    const TIRED = 'tired of song';
-    const INCREASEVOLUME = 'increase volume';
-    const DECREASEVOLUME = 'decrease volume';
-    const MAXIMIZEVOLUME = 'maximize volume';
-    const MUTE = 'mute';
-    const UNMUTE = 'unmute';
-    const SETPLAYBACKVOLUME = 'set playback volume to REPLACE';
-}
+$hermesCommands = array(
+    'play',
+    'pause',
+    'playpause',
+    'next song',
+    'thumbs up',
+    'thumbs down',
+    'tired of song',
+    'increase volume',
+    'decrease volume',
+    'maximize volume',
+    'mute',
+    'unmute',
+    'set playback volume to ',
+);
 
 // XXX: Validate commands to prevent AS injection.
 function sendHermesCommand($command, $argument=NULL, $script=NULL)
@@ -23,8 +22,11 @@ function sendHermesCommand($command, $argument=NULL, $script=NULL)
     if (is_null($script)) {
         $script = __DIR__ . '/status.applescript';
     }
-    if ($command === HermesCommands::SETPLAYBACKVOLUME) {
-        $command = str_replace('REPLACE', $argument, $command);
+    if (!in_array($command, $GLOBALS['hermesCommands'])) {
+        return false;
+    }
+    if (!is_null($argument)) {
+        $command .= $argument;
     }
 
     $statusMessage = null;
