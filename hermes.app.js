@@ -10,14 +10,15 @@ $(document).ready(function() {
 		status = $('#statusline'),
 		titleElement = $('title'),
 		dislike = $('#thumbs-down'),
-		like = $('#thumbs-up');
+		like = $('#thumbs-up'),
+		tiredOfSong = $('#tired-of-song');
 
 	// --------------------
 
 	function sendHermesCommand(e) {
 		var command;
 		if (e.type === 'click') {
-			command = e.target.id.replace('-', ' ');
+			command = e.target.id.replace(/-/g, ' ');
 		} else if (e.type === 'keypress') {
 			var key = e.which;
 			if (key === 32) { // space
@@ -28,6 +29,8 @@ $(document).ready(function() {
 				command = 'thumbs up';
 			} else if (key === 110) { // n
 				command = 'next song';
+			} else if (key === 116) { // t
+				command = 'tired of song';
 			} else {
 				return;
 			}
@@ -105,7 +108,7 @@ $(document).ready(function() {
 
 	// --------------------
 
-	$('#playpause, #next-song, #thumbs-up, #thumbs-down').click(sendHermesCommand).focus(function() { this.blur(); });
+	$('input[type=button]').click(sendHermesCommand).focus(function() { this.blur(); });
 	$(document).keypress(sendHermesCommand);
 
 	updateHermesApp();
