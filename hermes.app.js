@@ -5,8 +5,7 @@ $(document).ready(function() {
 	var title = $('#title'),
 		artist = $('#artist'),
 		album = $('#album'),
-		position = $('#position'),
-		duration = $('#duration'),
+		time = $('#time'),
 		artwork = $('#artwork'),
 		status = $('#statusline'),
 		titleElement = $('title'),
@@ -21,6 +20,11 @@ $(document).ready(function() {
 		var command;
 		if (e.type === 'click') {
 			command = e.target.id.replace(/-/g, ' ');
+			var target = $(e.target);
+			target.addClass('btn-success');
+			window.setTimeout(function () {
+				target.removeClass('btn-success');
+			}, 150);
 		} else if (e.type === 'keypress') {
 			var key = e.which;
 			if (key === 32) { // space
@@ -51,8 +55,7 @@ $(document).ready(function() {
 
 			updateRatingButtons(data.rating);
 
-			updateIfDifferent(position, timestampForSeconds(data.position));
-			updateIfDifferent(duration, timestampForSeconds(data.duration));
+			updateTime(data);
 
 			updateArtwork(data.artwork);
 			updateStatusLine(data);
@@ -69,6 +72,14 @@ $(document).ready(function() {
 				element.attr(attribute, text);
 			}
 		}
+	}
+
+	function updateTime(data) {
+		var integralPercentage = Math.round((data.position / data.duration) * 100)
+		time
+			.text(timestampForSeconds(data.position)+'/'+timestampForSeconds(data.duration))
+			.attr('aria-valuenow', integralPercentage)
+			.css('width', integralPercentage+'%');
 	}
 
 	function updateArtwork(artworkURL) {
@@ -89,13 +100,13 @@ $(document).ready(function() {
 	}
 
 	function updateRatingButtons(rating) {
-		dislike.val('Dislike').removeClass('ed');
-		like.val('Like').removeClass('ed').removeAttr('disabled');
+		dislike.val('Dislike').removeClass('btn-info');
+		like.val('Like').removeClass('btn-info').removeAttr('disabled');
 
 		if (rating == 1) {
-			like.val('Liked').addClass('ed');
+			like.val('Liked').addClass('btn-info');
 		} else if (rating == -1) {
-			dislike.val('Disliked').addClass('ed');
+			dislike.val('Disliked').addClass('btn-info');
 		}
 
 		if (rating == 1 || rating == -1) {

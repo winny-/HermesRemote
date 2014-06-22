@@ -4,43 +4,50 @@
     <title>Hermes (Loading&hellip;)</title>
     <link href='hermes.app.css' type='text/css' rel='stylesheet'>
     <link rel='icon' href=''>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="hermes.app.js"></script>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <h1 id='statusline'>Hermes (Loading&hellip;)</h1>
+    <div class='container'>
+        <h1 id='statusline'>Hermes (Loading&hellip;)</h1>
 
-    <ul id='controls'>
-        <li>
-            <input type='button' id='playpause' value='▶❚❚'>
-        </li>
-        <li>
-            <input type='button' id='next-song' value='▶▶'>
-        </li>
-        <li>&nbsp;</li>
-        <li>
-            <input type='button' id='thumbs-up' value='Like'>
-        </li>
-        <li>
-            <input type='button' id='thumbs-down' value='Dislike'>
-        </li>
-        <li>&nbsp;</li>
-        <li>
-            <input type='button' id='tired-of-song' value='Zzz'>
-        </li>
-    </ul>
+        <ul id='controls'>
+            <li>
+                <input class='btn' type='button' id='playpause' value='▶❚❚'>
+            </li>
+            <li class='spacer-right'>
+                <input class='btn' type='button' id='next-song' value='▶▶'>
+            </li>
+            <li>
+                <input class='btn' type='button' id='thumbs-up' value='Like'>
+            </li>
+            <li class='spacer-right'>
+                <input class='btn' type='button' id='thumbs-down' value='Dislike'>
+            </li>
+            <li>
+                <input class='btn' type='button' id='tired-of-song' value='Zzz'>
+            </li>
+        </ul>
 
-    <p>
-        <span id='title'></span>
-        <br>
-        <span id='artist'></span>
-        <br>
-        <span id='album'></span>
-        <br>
-        <br>
-        <span id='position'></span>/<span id='duration'></span>
-        <br>
-        <br>
-        <img id='artwork'>
-    </p>
+        <ul class="list-unstyled">
+            <li id='title'></li>
+            <li id='artist'></li>
+            <li id='album'></li>
+        </ul>
+        <div class='progress right' style='width: 40em; max-width: 100%;'>
+            <div id='time' class='progress-bar' role='progressbar' aria-valuemin='0' aria-valuemax='100' aira-valuenow='0' style='width: 0%;'></div>
+        </div>
+        <img id='artwork' class='img-responsive img-thumbnail'>
+        <hr>
+        <h5>Keybindings</h5>
+        <ul class='list-inline'>
+            <li><strong>space</strong> — play/pause</li>
+            <li><strong>n</strong> — next song</li>
+            <li><strong>l</strong> — like</li>
+            <li><strong>d</strong> — dislike</li>
+            <li><strong>t</strong> — tired of song</li>
+        </ul>
+    </div>
 </body>
