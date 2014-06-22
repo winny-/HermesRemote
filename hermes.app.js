@@ -5,7 +5,8 @@ $(document).ready(function() {
 	var title = $('#title'),
 		artist = $('#artist'),
 		album = $('#album'),
-		time = $('#time'),
+		position = $('#position'),
+		duration = $('#duration'),
 		artwork = $('#artwork'),
 		status = $('#statusline'),
 		titleElement = $('title'),
@@ -44,20 +45,36 @@ $(document).ready(function() {
 
 	function updateHermesApp() {
 		$.getJSON(hermesAPI).done(function (data) {
-			title.text(data.title);
-			artist.text(data.artist);
-			album.text(data.album);
+			updateIfDifferent(title, data.title);
+			updateIfDifferent(artist, data.artist);
+			updateIfDifferent(album, data.album);
+
 			updateRatingButtons(data.rating);
-			time.text(timestampForSeconds(data.position)+'/'+timestampForSeconds(data.duration));
+
+			updateIfDifferent(position, timestampForSeconds(data.position));
+			updateIfDifferent(duration, timestampForSeconds(data.duration));
+
 			updateArtwork(data.artwork);
 			updateStatusLine(data);
 		});
 	}
 
+	function updateIfDifferent(element, text, attribute) {
+		if (attribute === undefined) {
+			if (element.text() !== text) {
+				element.text(text);
+			}
+		} else {
+			if (element.attr(attribute) !== text) {
+				element.attr(attribute, text);
+			}
+		}
+	}
+
 	function updateArtwork(artworkURL) {
 		artworkURL = (artworkURL) ? artworkURL : 'missing-album.png';
-		artwork.attr('src', artworkURL);
-		linkIcon.attr('href', artworkURL);
+		updateIfDifferent(artwork, artworkURL, 'src');
+		updateIfDifferent(linkIcon, artworkURL, 'href');
 	}
 
 	function updateStatusLine(data) {
@@ -67,8 +84,8 @@ $(document).ready(function() {
 						  data.state;
 		var station = (data.station_name) ? ' '+data.station_name : '';
 		var statusLine = 'Hermes '+stateSymbol+station;
-		status.text(statusLine);
-		titleElement.text(statusLine);
+		updateIfDifferent(status, statusLine);
+		updateIfDifferent(titleElement, statusLine);
 	}
 
 	function updateRatingButtons(rating) {
