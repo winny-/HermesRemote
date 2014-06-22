@@ -4,7 +4,7 @@ This project is under flux and flow. Subject to change and breakage. Enjoy!
 
 ## What is it?
 
-![Screenshot of HermesRemote](http://i.imgur.com/EVj9lY5.png)
+![Screenshot of HermesRemote](https://i.imgur.com/1ebs4RT.png)
 
 The marriage of AppleScript and an dynamic webpage.
 An experiment: Control Hermes without adding server code to the main project.
@@ -42,4 +42,5 @@ or
 - Is vulnerable to AS injection because `sendHermesCommand()` does not validate commands.
 - Cannot switch stations.
 - Cannot view a list of recent songs.
-- `api.php` is send a `GET` every second — per client! Needs caching.
+- `api.php` is sent a `GET` every second — per client! Needs to cache and query less often.
+- Should be using something like [Backbone.js](http://backbonejs.org/).
