@@ -1,7 +1,8 @@
 'use strict';
 
 $(document).ready(function() {
-	var hermesAPI = 'api.php';
+	var statusAPI = 'api/status',
+		controlAPI = 'api/control';
 
 	// Cache frequent jQueries.
 	var title = $('#title'),
@@ -98,7 +99,7 @@ $(document).ready(function() {
 			command: command
 		};
 		if (argument !== undefined) form.argument = argument;
-		$.post(hermesAPI, form);
+		$.post(controlAPI, form);
 	}
 
 	// --------------------
@@ -106,7 +107,7 @@ $(document).ready(function() {
 	// --------------------
 
 	function updateHermesApp() {
-		$.getJSON(hermesAPI).done(function (data) {
+		$.getJSON(statusAPI).done(function (data) {
 			updateIfDifferent(title, data.title);
 			updateIfDifferent(artist, data.artist);
 			updateIfDifferent(album, data.album);
@@ -135,7 +136,7 @@ $(document).ready(function() {
 	}
 
 	function updateArtwork(artworkURL) {
-		artworkURL = (artworkURL) ? artworkURL : 'missing-album.png';
+		artworkURL = (artworkURL) ? artworkURL : 'assets/missing-album.png';
 		updateIfDifferent(artwork, artworkURL, 'src');
 		updateIfDifferent(linkIcon, artworkURL, 'href');
 	}
