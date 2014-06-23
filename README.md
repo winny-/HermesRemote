@@ -39,7 +39,6 @@ or
 
 ## Limitations of HermesRemote
 
-- Is vulnerable to AS injection because `sendHermesCommand()` does not validate commands.
 - Cannot switch stations.
 - Cannot view a list of recent songs.
 - `api.php` is sent a `GET` every second — per client! Needs to cache and query less often.
