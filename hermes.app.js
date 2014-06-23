@@ -181,6 +181,8 @@ $(document).ready(function() {
 		.on('slideStart', volumeSlideStartCallback)
 		.data('slider');
 
+	$('[title]').tooltip();
+
 	updateHermesApp();
 	window.setInterval(updateHermesApp, 1000);
 });
