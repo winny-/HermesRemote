@@ -123,13 +123,13 @@ $(document).ready(function() {
 	}
 
 	function updateRatingButtons(rating) {
-		dislike.val('Dislike').removeClass('btn-info');
-		like.val('Like').removeClass('btn-info');
+		dislike.removeClass('btn-primary');
+		like.removeClass('btn-primary');
 
 		if (rating == 1) {
-			like.val('Liked').addClass('btn-info');
+			like.addClass('btn-primary');
 		} else if (rating == -1) {
-			dislike.val('Disliked').addClass('btn-info');
+			dislike.addClass('btn-primary');
 		}
 	}
 

@@ -1,16 +1,14 @@
-#controls li {
-	display: inline;
-}
-
-.spacer-right {
-	padding-right: 18px;
-}
-
 .song-info {
-	padding-right: 30px;
 	font-size: 1.5em;
 }
 
 .top-spacer {
 	margin-top: 20px;
+}
+
+/* Always send click events to the button, not to nested elements.
+ * http://stackoverflow.com/a/15698643/2720026
+ */
+button * {
+	pointer-events: none;
 }

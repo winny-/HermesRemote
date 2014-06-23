@@ -23,6 +23,7 @@ function sendHermesCommand($command, $argument=NULL, $script=NULL)
         $script = __DIR__ . '/status.applescript';
     }
     if (!in_array($command, $GLOBALS['hermesCommands'])) {
+        error_log("Command \"{$command}\" not in \$hermesCommands.");
         return false;
     }
 
@@ -30,11 +31,10 @@ function sendHermesCommand($command, $argument=NULL, $script=NULL)
         if ($command === 'set playback volume to ' && is_numeric($argument) && count($argument) < 3) {
             $command .= $argument;
         } else {
+            error_log("Invalid argument \"{$argument}\" for command \"{$command}\".");
             return false;
         }
     }
-
-    error_log($command."\n");
 
     $statusMessage = null;
     $retval = null;
