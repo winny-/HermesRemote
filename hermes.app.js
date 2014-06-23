@@ -47,6 +47,10 @@ $(document).ready(function() {
 		$.post(hermesAPI, {command: command});
 	}
 
+	// --------------------
+	// Update the webpage
+	// --------------------
+
 	function updateHermesApp() {
 		$.getJSON(hermesAPI).done(function (data) {
 			updateIfDifferent(title, data.title);
@@ -60,18 +64,6 @@ $(document).ready(function() {
 			updateArtwork(data.artwork);
 			updateStatusLine(data);
 		});
-	}
-
-	function updateIfDifferent(element, text, attribute) {
-		if (attribute === undefined) {
-			if (element.text() !== text) {
-				element.text(text);
-			}
-		} else {
-			if (element.attr(attribute) !== text) {
-				element.attr(attribute, text);
-			}
-		}
 	}
 
 	function updateTime(data) {
@@ -111,6 +103,22 @@ $(document).ready(function() {
 
 		if (rating == 1 || rating == -1) {
 			like.attr('disabled', true);
+		}
+	}
+
+	// --------------------
+	// Helpers
+	// --------------------
+
+	function updateIfDifferent(element, text, attribute) {
+		if (attribute === undefined) {
+			if (element.text() !== text) {
+				element.text(text);
+			}
+		} else {
+			if (element.attr(attribute) !== text) {
+				element.attr(attribute, text);
+			}
 		}
 	}
 
