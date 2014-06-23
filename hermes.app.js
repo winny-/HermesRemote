@@ -1,3 +1,5 @@
+'use strict';
+
 $(document).ready(function() {
 	var hermesAPI = 'api.php';
 
@@ -38,6 +40,12 @@ $(document).ready(function() {
 		} else if (key === 116) { // t
 			command = 'tired of song';
 			activateButton(tiredOfSong);
+		} else if (key === 61 || key ===  43) { // = or +
+			increaseVolumeCallback(e);
+			return;
+		} else if (key === 45 || key === 95) { // - or _
+			decreaseVolumeCallback(e);
+			return;
 		} else {
 			return;
 		}
@@ -55,13 +63,34 @@ $(document).ready(function() {
 	}
 
 	function volumeSlideStopCallback(e) {
-		var newVolume = volumeSlider.getValue();
-		sendHermesCommand('set playback volume to ', newVolume);
+		setVolume(volumeSlider.getValue());
 		volumeSliderIsMoving = false;
 	}
 
 	function volumeSlideStartCallback(e) {
 		volumeSliderIsMoving = true;
+	}
+
+	function increaseVolumeCallback(e) {
+		var oldVolume = parseInt(volumeSlider.getValue(), 10);
+		newVolume = Math.min(oldVolume + 10, 100);
+		if (newVolume != oldVolume) {
+			setVolume(newVolume);
+		}
+		e.preventDefault();
+	}
+
+	function decreaseVolumeCallback(e) {
+		var oldVolume = parseInt(volumeSlider.getValue(), 10);
+		newVolume = Math.max(oldVolume - 10, 0);
+		if (newVolume != oldVolume) {
+			setVolume(newVolume);
+		}
+		e.preventDefault();
+	}
+
+	function setVolume(volume) {
+		sendHermesCommand('set playback volume to ', volume);
 	}
 
 	function sendHermesCommand(command, argument) {
@@ -98,11 +127,11 @@ $(document).ready(function() {
 	}
 
 	function updateTime(data) {
-		var integralPercentage = Math.round((data.position / data.duration) * 100);
+		var percentage = (data.position / data.duration) * 100;
 		time
 			.text(timestampForSeconds(data.position)+'/'+timestampForSeconds(data.duration))
-			.attr('aria-valuenow', integralPercentage)
-			.css('width', integralPercentage+'%');
+			.attr('aria-valuenow', percentage)
+			.css('width', percentage+'%');
 	}
 
 	function updateArtwork(artworkURL) {
@@ -180,6 +209,9 @@ $(document).ready(function() {
 		}}).on('slideStop', volumeSlideStopCallback)
 		.on('slideStart', volumeSlideStartCallback)
 		.data('slider');
+
+	$('#increase-volume').click(increaseVolumeCallback);
+	$('#decrease-volume').click(decreaseVolumeCallback);
 
 	$('[title]').tooltip();
 
