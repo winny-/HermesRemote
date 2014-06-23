@@ -8,46 +8,63 @@
     <script src="hermes.app.js"></script>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src='bootstrap-slider.js'></script>
+    <link rel='stylesheet' href='slider.css'/>
 </head>
 <body>
+
     <div class='container'>
-        <h1 id='statusline'>Hermes (Loading&hellip;)</h1>
-
-        <ul id='controls'>
-            <li>
-                <input class='btn' type='button' id='playpause' value='▶❚❚'>
-            </li>
-            <li class='spacer-right'>
-                <input class='btn' type='button' id='next-song' value='▶▶'>
-            </li>
-            <li>
-                <input class='btn' type='button' id='thumbs-up' value='Like'>
-            </li>
-            <li class='spacer-right'>
-                <input class='btn' type='button' id='thumbs-down' value='Dislike'>
-            </li>
-            <li>
-                <input class='btn' type='button' id='tired-of-song' value='Zzz'>
-            </li>
-        </ul>
-
-        <ul class="list-unstyled">
-            <li id='title'></li>
-            <li id='artist'></li>
-            <li id='album'></li>
-        </ul>
-        <div class='progress right' style='width: 40em; max-width: 100%;'>
-            <div id='time' class='progress-bar' role='progressbar' aria-valuemin='0' aria-valuemax='100' aira-valuenow='0' style='width: 0%;'></div>
+        <div class='page-header'>
+            <h1 id='status-line'>Hermes (Loading&hellip;)</h1>
         </div>
-        <img id='artwork' class='img-responsive img-thumbnail'>
+
+        <div class='row'>
+            <div class='col-md-2 col-sm-3 col-xs-4'>
+                <input class='btn btn-default command-button' type='button' id='playpause' value='▶❚❚'>
+                <input class='btn btn-default command-button' type='button' id='next-song' value='▶▶'>
+            </div>
+            <div class='col-md-2 col-sm-3 col-xs-4'>
+                <input class='btn btn-default command-button' type='button' id='thumbs-up' value='Like'>
+                <input class='btn btn-default command-button' type='button' id='thumbs-down' value='Dislike'>
+            </div>
+            <div class='col-md-1 col-sm-2 col-xs-2'>
+                <input class='btn btn-default command-button' type='button' id='tired-of-song' value='Zzz'>
+            </div>
+            <div class='col-md-3 col-sm-4 col-xs-5'>
+                <input id='volume-slider' type="text" class="span2" value="" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="50" data-slider-orientation="horizontal" data-slider-selection="after" data-slider-tooltip="show">
+            </div>
+        </div>
+        <div class='row top-spacer'>
+            <div class='col-md-6 col-sm-6 col-xs-6'>
+                <ul class="list-unstyled song-info" style="float: left;">
+                    <li class='top-spacer' id='title'></li>
+                    <li class='top-spacer' id='artist'></li>
+                    <li class='top-spacer' id='album'></li>
+                </ul>
+            </div>
+            <div class='col-md-6 col-sm-6 col-xs-6'>
+                <img id='artwork' class='img-responsive img-thumbnail'>
+            </div>
+        </div>
+        <div class='row top-spacer'>
+            <div class='col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 col-xs-8 col-xs-offset-2 col-lg-8 col-lg-offset-2'>
+                <div class='progress right' style='width: 40em; max-width: 100%;'>
+                    <div id='time' class='progress-bar' role='progressbar' aria-valuemin='0' aria-valuemax='100' aira-valuenow='0' style='width: 0%;'></div>
+                </div>
+                </div>
+        </div>
         <hr>
-        <h5>Keybindings</h5>
-        <ul class='list-inline'>
-            <li><strong>space</strong> — play/pause</li>
-            <li><strong>n</strong> — next song</li>
-            <li><strong>l</strong> — like</li>
-            <li><strong>d</strong> — dislike</li>
-            <li><strong>t</strong> — tired of song</li>
-        </ul>
+        <div class='row'>
+            <div class='col-md-6'>
+                <p class='span12'>Keyboard shortcuts</p>
+                <dl class='dl-horizontal'>
+                    <dt>Space</dt><dd>play/pause</dd>
+                    <dt>N</dt><dd>next song</dd>
+                    <dt>L</dt><dd>like</dd>
+                    <dt>D</dt><dd>dislike</dd>
+                    <dt>T</dt><dd>tired of song</dd>
+                </dl>
+            </div>
+        </div>
     </div>
 </body>

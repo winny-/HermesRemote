@@ -4,7 +4,7 @@ This project is under flux and flow. Subject to change and breakage. Enjoy!
 
 ## What is it?
 
-![Screenshot of HermesRemote](https://i.imgur.com/In8D8aT.png)
+![Screenshot of HermesRemote](http://i.imgur.com/jXX7gLg.png)
 
 The marriage of AppleScript and an dynamic webpage.
 An experiment: Control Hermes without adding server code to the main project.

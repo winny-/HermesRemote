@@ -25,9 +25,16 @@ function sendHermesCommand($command, $argument=NULL, $script=NULL)
     if (!in_array($command, $GLOBALS['hermesCommands'])) {
         return false;
     }
+
     if (!is_null($argument)) {
-        $command .= $argument;
+        if ($command === 'set playback volume to ' && is_numeric($argument) && count($argument) < 3) {
+            $command .= $argument;
+        } else {
+            return false;
+        }
     }
+
+    error_log($command."\n");
 
     $statusMessage = null;
     $retval = null;

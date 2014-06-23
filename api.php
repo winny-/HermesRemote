@@ -3,7 +3,8 @@
 require_once(__DIR__ . '/hermes.lib.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    sendHermesCommand($_POST['command']);
+	$argument = (array_key_exists('argument', $_POST)) ? $_POST['argument'] : NULL;
+    sendHermesCommand($_POST['command'], $argument);
     return;
 } else if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $status = getHermesStatus();

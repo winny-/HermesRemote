@@ -7,44 +7,69 @@ $(document).ready(function() {
 		album = $('#album'),
 		time = $('#time'),
 		artwork = $('#artwork'),
-		status = $('#statusline'),
+		status = $('#status-line'),
 		titleElement = $('title'),
+		nextSong = $('#next-song'),
+		playPause = $('#playpause'),
 		dislike = $('#thumbs-down'),
 		like = $('#thumbs-up'),
 		tiredOfSong = $('#tired-of-song'),
 		linkIcon = $('link[rel=icon]');
 
+	var volumeSliderIsMoving = false;
+
 	// --------------------
 
-	function sendHermesCommand(e) {
-		var command;
-		if (e.type === 'click') {
-			command = e.target.id.replace(/-/g, ' ');
-			var target = $(e.target);
-			target.addClass('btn-success');
-			window.setTimeout(function () {
-				target.removeClass('btn-success');
-			}, 150);
-		} else if (e.type === 'keypress') {
-			var key = e.which;
-			if (key === 32) { // space
-				command = 'playpause';
-			} else if (key === 100) { // d
-				command = 'thumbs down';
-			} else if (key === 108) { // l
-				command = 'thumbs up';
-			} else if (key === 110) { // n
-				command = 'next song';
-			} else if (key === 116) { // t
-				command = 'tired of song';
-			} else {
-				return;
-			}
+	function keypressCallback(e) {
+		var key = e.which,
+			command;
+		if (key === 32) { // space
+			command = 'playpause';
+			activateButton(playPause);
+		} else if (key === 100) { // d
+			command = 'thumbs down';
+			activateButton(dislike);
+		} else if (key === 108) { // l
+			command = 'thumbs up';
+			activateButton(like);
+		} else if (key === 110) { // n
+			command = 'next song';
+			activateButton(nextSong);
+		} else if (key === 116) { // t
+			command = 'tired of song';
+			activateButton(tiredOfSong);
 		} else {
-			throw 'HermesRemote: Bad event type '+e.type+' in sendHermesCommand()';
+			return;
 		}
 
-		$.post(hermesAPI, {command: command});
+		e.preventDefault();
+
+		sendHermesCommand(command);
+	}
+
+	function buttonClickCallback(e) {
+		var command = e.target.id.replace(/-/g, ' ');
+		activateButton(e.target);
+
+		sendHermesCommand(command);
+	}
+
+	function volumeSlideStopCallback(e) {
+		var newVolume = volumeSlider.getValue();
+		sendHermesCommand('set playback volume to ', newVolume);
+		volumeSliderIsMoving = false;
+	}
+
+	function volumeSlideStartCallback(e) {
+		volumeSliderIsMoving = true;
+	}
+
+	function sendHermesCommand(command, argument) {
+		var form = {
+			command: command
+		};
+		if (argument !== undefined) form.argument = argument;
+		$.post(hermesAPI, form);
 	}
 
 	// --------------------
@@ -59,6 +84,7 @@ $(document).ready(function() {
 
 			updateRatingButtons(data.rating);
 
+			updateVolume(data.volume);
 			updateTime(data);
 
 			updateArtwork(data.artwork);
@@ -66,8 +92,13 @@ $(document).ready(function() {
 		});
 	}
 
+	function updateVolume(volume) {
+		if (volumeSliderIsMoving) return;
+		volumeSlider.setValue(volume);
+	}
+
 	function updateTime(data) {
-		var integralPercentage = Math.round((data.position / data.duration) * 100)
+		var integralPercentage = Math.round((data.position / data.duration) * 100);
 		time
 			.text(timestampForSeconds(data.position)+'/'+timestampForSeconds(data.duration))
 			.attr('aria-valuenow', integralPercentage)
@@ -93,22 +124,26 @@ $(document).ready(function() {
 
 	function updateRatingButtons(rating) {
 		dislike.val('Dislike').removeClass('btn-info');
-		like.val('Like').removeClass('btn-info').removeAttr('disabled');
+		like.val('Like').removeClass('btn-info');
 
 		if (rating == 1) {
 			like.val('Liked').addClass('btn-info');
 		} else if (rating == -1) {
 			dislike.val('Disliked').addClass('btn-info');
 		}
-
-		if (rating == 1 || rating == -1) {
-			like.attr('disabled', true);
-		}
 	}
 
 	// --------------------
 	// Helpers
 	// --------------------
+
+	function activateButton(button) {
+		var button = $(button);
+		button.addClass('active');
+		window.setTimeout(function () {
+			button.removeClass('active');
+		}, 250)
+	}
 
 	function updateIfDifferent(element, text, attribute) {
 		if (attribute === undefined) {
@@ -122,32 +157,29 @@ $(document).ready(function() {
 		}
 	}
 
-	function stringForRating(rating) {
-		switch (rating) {
-			case 0:
-			return 'no rating';
-			case -1:
-			return 'disliked';
-			case 1:
-			return 'liked';
-			default:
-			return 'unknown rating (!)';
-		}
-	}
-
 	function timestampForSeconds(time) {
 		function twoDigits(n) {
-			return ('0' + n).slice(-2);
+			return ('0' + String(n)).slice(-2);
 		}
 		var minutes = Math.floor(time / 60);
 		var seconds = time - minutes * 60;
-		return twoDigits(minutes)+':'+twoDigits(seconds);
+		return minutes+':'+twoDigits(seconds);
 	}
 
 	// --------------------
 
-	$('input[type=button]').click(sendHermesCommand).focus(function() { this.blur(); });
-	$(document).keypress(sendHermesCommand);
+	$('.command-button')
+		.click(buttonClickCallback)
+		.focus(function() {
+			this.blur();
+		});
+	$(document).keypress(keypressCallback);
+	var volumeSlider = $('#volume-slider').slider({
+		formater: function (value) {
+			return 'Volume: '+value+'%';
+		}}).on('slideStop', volumeSlideStopCallback)
+		.on('slideStart', volumeSlideStartCallback)
+		.data('slider');
 
 	updateHermesApp();
 	window.setInterval(updateHermesApp, 1000);

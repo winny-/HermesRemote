@@ -5,3 +5,12 @@
 .spacer-right {
 	padding-right: 18px;
 }
+
+.song-info {
+	padding-right: 30px;
+	font-size: 1.5em;
+}
+
+.top-spacer {
+	margin-top: 20px;
+}
