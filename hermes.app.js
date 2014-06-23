@@ -73,7 +73,7 @@ $(document).ready(function() {
 
 	function increaseVolumeCallback(e) {
 		var oldVolume = parseInt(volumeSlider.getValue(), 10);
-		newVolume = Math.min(oldVolume + 10, 100);
+		var newVolume = Math.min(oldVolume + 10, 100);
 		if (newVolume != oldVolume) {
 			setVolume(newVolume);
 		}
@@ -82,7 +82,7 @@ $(document).ready(function() {
 
 	function decreaseVolumeCallback(e) {
 		var oldVolume = parseInt(volumeSlider.getValue(), 10);
-		newVolume = Math.max(oldVolume - 10, 0);
+		var newVolume = Math.max(oldVolume - 10, 0);
 		if (newVolume != oldVolume) {
 			setVolume(newVolume);
 		}
