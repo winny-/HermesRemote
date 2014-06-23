@@ -16,7 +16,6 @@ $hermesCommands = array(
     'set playback volume to ',
 );
 
-// XXX: Validate commands to prevent AS injection.
 function sendHermesCommand($command, $argument=NULL, $script=NULL)
 {
     if (is_null($script)) {
@@ -68,28 +67,18 @@ function getHermesStatus($script=NULL)
     return $status['info'];
 }
 
-function getHermesRating($rating) {
-    switch ($rating) {
-        case 0:
-            return 'no rating';
-        case -1:
-            return 'disliked';
-        case 1:
-            return 'liked';
-        default:
-            throw new Exception('Bad rating: '.$rating);
+function expectHTTPMethod($method) {
+    if ($_SERVER['REQUEST_METHOD'] !== $method) {
+        http_response_code(405);
+        header('Content-Type: text/plain');
+        echo "Invalid method {$_SERVER['REQUEST_METHOD']}.";
+        exit();
     }
+    return;
 }
 
-function formatHermesTime($seconds) {
-    $hours = floor($seconds / 3600);
-    $mins = floor(($seconds - ($hours*3600)) / 60);
-    $secs = floor($seconds % 60);
-
-    $mins = sprintf('%02s', $mins);
-    $secs = sprintf('%02s', $secs);
-
-    return "${mins}:{$secs}";
+function sendJSONResponse($object) {
+    header('Content-Type: application/json');
+    echo json_encode($object);
+    return;
 }
-
-?>
