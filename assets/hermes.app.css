@@ -6,11 +6,25 @@
 	margin-top: 25px;
 }
 
+.control-group {
+	white-space: nowrap;
+	margin-bottom: 5px; /* vertical space when columns are wrapped */
+}
+
+/* Do not allow text selection when double-clicking the volume icons */
 #increase-volume, #decrease-volume {
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	-khtml-user-select: none;
 	-ms-user-select: none;
+}
+
+#increase-volume {
+	margin-left: 8px;
+}
+
+#decrease-volume {
+	margin-right: 8px;
 }
 
 /* Always send click events to the button, not to nested elements.

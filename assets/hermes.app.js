@@ -1,6 +1,11 @@
 'use strict';
 
 $(document).ready(function() {
+
+	// --------------------
+	// Commonly used variables
+	// --------------------
+
 	var statusAPI = 'api/status',
 		controlAPI = 'api/control';
 
@@ -19,8 +24,11 @@ $(document).ready(function() {
 		tiredOfSong = $('#tired-of-song'),
 		linkIcon = $('link[rel=icon]');
 
-	var volumeSliderIsMoving = false;
+	var volumeSliderIsMoving = false,
+		volumeSlider; // Declared in page init section (bottom)
 
+	// --------------------
+	// Event callbacks
 	// --------------------
 
 	function keypressCallback(e) {
@@ -89,6 +97,10 @@ $(document).ready(function() {
 		}
 		e.preventDefault();
 	}
+
+	// --------------------
+	// Send control commands
+	// --------------------
 
 	function setVolume(volume) {
 		sendHermesCommand('set playback volume to ', volume);
@@ -196,6 +208,8 @@ $(document).ready(function() {
 		return minutes+':'+twoDigits(seconds);
 	}
 
+	// --------------------
+	// Initialize the page
 	// --------------------
 
 	$('.command-button')
