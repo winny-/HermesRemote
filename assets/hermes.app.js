@@ -214,7 +214,12 @@ $(document).ready(function() {
 	$('#increase-volume').click(increaseVolumeCallback);
 	$('#decrease-volume').click(decreaseVolumeCallback);
 
-	$('[title]').tooltip();
+	$('[title]').tooltip({
+		delay: {
+			show: 500,
+			hide: 50
+		}
+	});
 
 	updateHermesApp();
 	window.setInterval(updateHermesApp, 1000);
