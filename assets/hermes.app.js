@@ -184,7 +184,7 @@ $(document).ready(function() {
 		button.addClass('active');
 		window.setTimeout(function () {
 			button.removeClass('active');
-		}, 250)
+		}, 250);
 	}
 
 	function updateIfDifferent(element, text, attribute) {
