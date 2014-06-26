@@ -160,7 +160,7 @@ $(document).ready(function() {
 						  data.state;
 		var station = (data.station_name) ? ' '+data.station_name : '';
 		var statusLine = 'Hermes '+stateSymbol+station;
-		updateIfDifferent(status, statusLine);
+		updateIfDifferent(status, stateSymbol+station);
 		updateIfDifferent(titleElement, statusLine);
 	}
 
@@ -218,10 +218,8 @@ $(document).ready(function() {
 			this.blur();
 		});
 	$(document).keypress(keypressCallback);
-	var volumeSlider = $('#volume-slider').slider({
-		formater: function (value) {
-			return 'Volume: '+value+'%';
-		}}).on('slideStop', volumeSlideStopCallback)
+	var volumeSlider = $('#volume-slider').slider()
+		.on('slideStop', volumeSlideStopCallback)
 		.on('slideStart', volumeSlideStartCallback)
 		.data('slider');
 
@@ -232,7 +230,9 @@ $(document).ready(function() {
 		delay: {
 			show: 500,
 			hide: 50
-		}
+		},
+		container: 'body', // Needed for btn-group http://getbootstrap.com/components/#btn-groups
+		placement: 'auto'
 	});
 
 	updateHermesApp();

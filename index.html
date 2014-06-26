@@ -12,40 +12,54 @@
     <link rel='stylesheet' href='assets/slider.css'/>
 </head>
 <body>
+    <nav class='navbar navbar-default navbar-static-top' role='navigation'>
+        <div class='container'>
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <span class="navbar-brand" id='status-line'>Hermes (Loading&hellip;)</span>
+            </div>
+            <div class='navbar-collapse collapse'>
+                <ul class='nav navbar-nav'>
+                    <!-- Radio switching controls here -->
+                </ul>
+                <ul class='nav navbar-nav navbar-right'>
+                    <li>
+                        <div class='btn-group command-group'>
+                            <button class='btn btn-default navbar-btn command-button' id='playpause' title='Play/pause'>
+                                <span class='glyphicon glyphicon-play'></span><span class='glyphicon glyphicon-pause'></span>
+                            </button>
+                            <button class='btn btn-default navbar-btn command-button' id='next-song' title='Skip to next song'>
+                                <span class='glyphicon glyphicon-forward'></span>
+                            </button>
+                        </div>
+                    </li>
+                    <li>
+                        <div class='btn-group command-group'>
+                            <button class='btn btn-default navbar-btn command-button' id='thumbs-up' title='Like'>
+                                <span class='glyphicon glyphicon-thumbs-up'></span>
+                            </button>
+                            <button class='btn btn-default navbar-btn command-button' id='thumbs-down' title='Dislike'>
+                                <span class='glyphicon glyphicon-thumbs-down'></span>
+                            </button>
+                        </div>
+                        <button class='btn btn-default navbar-btn command-group command-button' id='tired-of-song' title="Don't play for a month">Zzz</button>
+                    </li>
+                    <li class='volume-control navbar-text command-group'>
+                        <span class='glyphicon glyphicon-volume-down' id='decrease-volume' title='Decrease volume'></span>
+                        <input id='volume-slider' type="text" class="span2" value="" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="50" data-slider-orientation="horizontal" data-slider-selection="after" data-slider-tooltip="hide" style="width:50%;">
+                        <span class='glyphicon glyphicon-volume-up' id='increase-volume' title='Increase volume'></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
     <div class='container'>
-
-        <div class='page-header'>
-            <h1 id='status-line'>Hermes (Loading&hellip;)</h1>
-        </div>
-
         <div class='row'>
-            <div class='col-md-2 col-sm-3 col-xs-4 control-group'>
-                <button class='btn btn-default command-button' id='playpause' title='Play/pause'>
-                    <span class='glyphicon glyphicon-play'></span><span class='glyphicon glyphicon-pause'></span>
-                </button>
-                <button class='btn btn-default command-button' id='next-song' title='Skip to next song'>
-                    <span class='glyphicon glyphicon-forward'></span>
-                </button>
-            </div>
-            <div class='col-md-2 col-sm-3 col-xs-4 control-group'>
-                <button class='btn btn-default command-button' id='thumbs-up' title='Like'>
-                    <span class='glyphicon glyphicon-thumbs-up'></span>
-                </button>
-                <button class='btn btn-default command-button' id='thumbs-down' title='Dislike'>
-                    <span class='glyphicon glyphicon-thumbs-down'></span>
-                </button>
-            </div>
-            <div class='col-md-1 col-sm-2 col-xs-2 control-group'>
-                <button class='btn btn-default command-button' id='tired-of-song' title="Don't play for a month">Zzz</button>
-            </div>
-            <div class='col-md-3 col-sm-4 col-xs-5 control-group'>
-                <span class='glyphicon glyphicon-volume-down' id='decrease-volume'></span>
-                <input id='volume-slider' type="text" class="span2" value="" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="50" data-slider-orientation="horizontal" data-slider-selection="after" data-slider-tooltip="show">
-                <span class='glyphicon glyphicon-volume-up' id='increase-volume'></span>
-            </div>
-        </div>
-
-        <div class='row top-spacer'>
             <div class='col-md-6 col-sm-6 col-xs-6'>
                 <ul class="list-unstyled song-info">
                     <li class='top-spacer'><span title='Song title' id='title'></span></li>
